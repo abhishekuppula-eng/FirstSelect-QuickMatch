@@ -45,3 +45,17 @@ pytest -q
 - Tool payload contract emitted by matching agent:
   - `{"name": "present_matching_suppliers", "input": {"suppliers": [...]}}`
 - SQL migration script includes creation/migration of `suppliers`, `facilities`, `vehicles`, `agents`, and `loads` with RLS policies and triggers.
+
+
+## PostgreSQL MCP support for Retrieval Agent
+
+The retrieval agent now supports **PostgreSQL MCP-style execution**:
+
+- It builds parameterized PostgreSQL SQL from requirement hints (`PostgresQueryBuilder`).
+- It can execute SQL through a pluggable MCP adapter (`PostgresMCPClient.run_sql`).
+- If no MCP adapter is configured, it falls back to in-memory facility input for deterministic local tests.
+
+Main files:
+- `src/first_select_quickmatch/db/sql_builder.py`
+- `src/first_select_quickmatch/db/mcp_postgres.py`
+- `src/first_select_quickmatch/agents/retrieval_agent.py`
